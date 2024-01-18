@@ -1,4 +1,4 @@
-import { Circle, Triangle, Square } from './shapes.mjs';
+const { Circle, Triangle, Square } = require('./shapes'); // Assuming shapes.js is the filename
 
 describe('Shape tests', () => {
   test('Circle render method', () => {

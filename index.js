@@ -1,9 +1,7 @@
-import inquirer from 'inquirer';
-import fs from 'fs';
-import { Circle, Triangle, Square } from './shapes.js'; // Import the classes from shapes.mjs
+const fs = require('fs');
+const { Circle, Triangle, Square } = require('./shapes.js'); // Import the classes from shapes.js
 
-
-async function promptUser() {
+async function promptUser(inquirer) {
   const answers = await inquirer.prompt([
     {
       type: 'input',
@@ -56,7 +54,6 @@ function generateSvgMarkup(text, textColor, shapeType, shapeColor) {
       throw new Error('Unknown shape type');
   }
 
-  // Remove the <svg> tags from the rendered shape SVGs
   shapeSvg = shapeSvg.replace('<svg>', '').replace('</svg>', '');
 
   const textSvg = `<text x="150" y="125" font-family="Verdana" font-size="35" fill="${textColor}" text-anchor="middle">${text}</text>`;
@@ -66,14 +63,18 @@ function generateSvgMarkup(text, textColor, shapeType, shapeColor) {
 
 async function createSvgFile() {
   try {
-    const answers = await promptUser();
-    const svgContent = generateSvgMarkup(answers.text, answers.textColor, answers.shape, answers.shapeColor);
-    fs.writeFileSync('logo.svg', svgContent);
-    console.log('Generated logo.svg');
+      const inquirerModule = await import('inquirer');
+      const inquirer = inquirerModule.default;
+
+      const answers = await promptUser(inquirer);
+      const svgContent = generateSvgMarkup(answers.text, answers.textColor, answers.shape, answers.shapeColor);
+      fs.writeFileSync('logo.svg', svgContent);
+      console.log('Generated logo.svg');
   } catch (error) {
-    console.error('Error creating SVG file:', error);
+      console.error('Error creating SVG file:', error);
   }
 }
 
-// Execute the main program logic
+// Exporting functions at the end of the file
+module.exports = { promptUser, generateSvgMarkup, createSvgFile };
 createSvgFile();

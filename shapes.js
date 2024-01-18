@@ -5,7 +5,7 @@ class Shape {
   // Common methods (if any)
 }
 
-export class Circle extends Shape {
+class Circle extends Shape {
   constructor(color) {
     super(color);
   }
@@ -15,7 +15,7 @@ export class Circle extends Shape {
   }
 }
 
-export class Triangle extends Shape {
+class Triangle extends Shape {
   constructor(color) {
     super(color);
   }
@@ -25,7 +25,7 @@ export class Triangle extends Shape {
   }
 }
 
-export class Square extends Shape {
+class Square extends Shape {
   constructor(color) {
     super(color);
   }
@@ -34,3 +34,6 @@ export class Square extends Shape {
     return `<rect x="100" y="50" width="100" height="100" fill="${this.color}" />`;
   }
 }
+
+// Export the classes using module.exports
+module.exports = { Circle, Triangle, Square };
